@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const authRoutes = require('./src/routes/auth');
 //bawaan datastore
 const { Datastore } = require('@google-cloud/datastore');
 const entity = {
