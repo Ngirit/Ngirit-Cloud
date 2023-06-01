@@ -1,48 +1,28 @@
 const express = require('express');
 const app = express();
-const authRoutes = require('./src/routes/auth');
-//bawaan datastore
-const { Datastore } = require('@google-cloud/datastore');
-const entity = {
-    key: datastore.key('Kind'),
-    data: { property: 'value' },
-  };
-const port = 80;
-const { Datastore } = require('@google-cloud/datastore');
+const router = express.Router();
+const authRoutes = require('./routes/auth');
+const bodyParser = require('body-parser');
 
-const datastore = new Datastore({
-  projectId: '<ngirit-project>',
-  credentials: require('./credentials.json'),
+router.use('/food',(req, res, next) => {
+  res.json({name: "Budi", email: "buditampan@gmail.com"});
+  next();
 });
 
-
-app.get('/', (req, res) => {
-  res.send('success!');
+router.use('/price',(req, res, next) => {
+  res.json({price: 100000});
+  next();
 });
 
-app.listen(port, () => {
-  console.log(`Server is working on http://localhost:${port}`);
+router.get('/customers',(req, res, next) => {
+  res.json({name: "customer"});
+  next();
 });
 
-//save objek ke datastore
-datastore.save(entity)
-  .then(() => {
-    console.log('Entity saved successfully.');
-  })
-  .catch((err) => {
-    console.error('Error saving entity:', err);
-  });
+app.use(bodyParser.json());
 
-//membuat rute untuk mengambil dari datastore
-app.get('/entities', (req, res) => {
-    const query = datastore.createQuery('Kind');
-  
-    datastore.runQuery(query)
-      .then(([entities]) => {
-        res.json(entities);
-      })
-      .catch((err) => {
-        console.error('Error retrieving entities:', err);
-        res.sendStatus(500);
-      });
-});
+
+app.use('/v1/auth', authRoutes);
+
+app.listen(8080);
+
