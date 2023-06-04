@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const router = express.Router();
-const authRoutes = require('./routes/auth');
+const authRoutes = require('./routes/routes');
 const bodyParser = require('body-parser');
 
 router.use('/food',(req, res, next) => {
@@ -22,7 +22,8 @@ router.get('/customers',(req, res, next) => {
 app.use(bodyParser.json());
 
 
-app.use('/v1/auth', authRoutes);
+app.use('/v1/register', authRoutes);
+app.use('/v1/login', authRoutes);
 
 app.listen(8080);
 
