@@ -1,4 +1,4 @@
-var db = require('../config/database');
+var db = require('../config/database.js');
 var mysql = require('mysql');
 var md5 = require('md5');
 const { nanoid } = require('nanoid');
@@ -64,6 +64,7 @@ exports.regist = function (req, res) {
 
 exports.login = function (req, res){
   var post = {
+      
       email: req.body.email,
       password: req.body.password
   } 
